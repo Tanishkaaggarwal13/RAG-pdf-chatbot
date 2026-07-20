@@ -8,6 +8,7 @@ api_key = os.getenv("GOOGLE_API_KEY")
 
 if not api_key:
     api_key = st.secrets.get("GOOGLE_API_KEY")
+st.write("API Key Loaded:", api_key is not None)
 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -17,13 +18,15 @@ import streamlit as st
 from time import sleep
 import os
 
+st.write("App started successfully")
 
-llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash" , temperature=0.2, google_api_key=api_key)
+
+llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash" , temperature=0.2, google_api_key=api_key)
 if("vector_db" not in st.session_state):
     st.session_state.vector_db = None
 
-print("Using model: gemini-3.5-flash")
-st.write("Using model: gemini-3.5-flash")
+print("Using model: gemini-2.5-flash")
+st.write("Using model: gemini-2.5-flash")
 
 
 def document_process(path):
@@ -40,7 +43,7 @@ def document_process(path):
 
 
 #embedding and vectorstore
-    embeddings = GoogleGenerativeAIEmbeddings( model="gemini-embedding-2", google_api_key=api_key)
+    embeddings = GoogleGenerativeAIEmbeddings( model="models/text-embedding-004", google_api_key=api_key)
     vector_db = InMemoryVectorStore.from_documents(
     documents=splitted_docs,
     embedding=embeddings
@@ -85,7 +88,7 @@ if st.session_state.document_uploaded and st.session_state.vector_db :
         for doc in docs:
             context += doc.page_content + "\n\n"
 
-        prompt = f""""You are a helpful assistant. Use the following context to answer the question. If the answer is not in the context, say 'I don't know'.\n\nContext:\n{context}\n\nQuestion: {query}\nAnswer:"""
+        prompt = f"""You are a helpful assistant. Use the following context to answer the question. If the answer is not in the context, say 'I don't know'.\n\nContext:\n{context}\n\nQuestion: {query}\nAnswer:"""
       
         result = llm.invoke(prompt)
 
