@@ -1,6 +1,13 @@
 from dotenv import load_dotenv
 
 load_dotenv()  
+import os
+import streamlit as st
+
+api_key = os.getenv("GOOGLE_API_KEY")
+
+if not api_key:
+    api_key = st.secrets.get("GOOGLE_API_KEY")
 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -11,7 +18,7 @@ from time import sleep
 import os
 
 
-llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash" , temperature=0.2,)
+llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash" , temperature=0.2, google_api_key=api_key)
 if("vector_db" not in st.session_state):
     st.session_state.vector_db = None
 
@@ -33,7 +40,7 @@ def document_process(path):
 
 
 #embedding and vectorstore
-    embeddings = GoogleGenerativeAIEmbeddings( model="gemini-embedding-2")
+    embeddings = GoogleGenerativeAIEmbeddings( model="gemini-embedding-2", google_api_key=api_key)
     vector_db = InMemoryVectorStore.from_documents(
     documents=splitted_docs,
     embedding=embeddings
