@@ -40,6 +40,11 @@ RAG-pdf-chatbot/
 ├── .env              # Local only (not committed)
 └── uploaded_document.pdf
 ```
+📸 Screenshots
+Home Interface
+![Home](RAG-chatbotss.png)
+
+
 
 ---
 
