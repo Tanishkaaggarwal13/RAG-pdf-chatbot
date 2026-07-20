@@ -43,7 +43,7 @@ def document_process(path):
 
 
 #embedding and vectorstore
-    embeddings = GoogleGenerativeAIEmbeddings( model="models/text-embedding-004", google_api_key=api_key)
+    embeddings = GoogleGenerativeAIEmbeddings( model="models/gemini-embedding-001", google_api_key=api_key)
     vector_db = InMemoryVectorStore.from_documents(
     documents=splitted_docs,
     embedding=embeddings
