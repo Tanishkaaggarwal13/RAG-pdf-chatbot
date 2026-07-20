@@ -8,7 +8,7 @@ api_key = os.getenv("GOOGLE_API_KEY")
 
 if not api_key:
     api_key = st.secrets.get("GOOGLE_API_KEY")
-st.write("API Key Loaded:", api_key is not None)
+
 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
