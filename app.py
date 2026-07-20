@@ -21,12 +21,12 @@ import os
 st.write("App started successfully")
 
 
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash" , temperature=0.2, google_api_key=api_key)
+llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash" , temperature=0.2, google_api_key=api_key)
 if("vector_db" not in st.session_state):
     st.session_state.vector_db = None
 
-print("Using model: gemini-2.5-flash")
-st.write("Using model: gemini-2.5-flash")
+print("Using model: gemini-3.5-flash")
+st.write("Using model: gemini-3.5-flash")
 
 
 def document_process(path):
